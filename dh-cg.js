@@ -23,6 +23,22 @@ function rand_attr(dice = 3, sum = 10) {
   return arr_return[1];
 };
 
+function sort_select_list(select_list) {
+  let items = $(select_list + " option").get();
+  items.sort(function(a,b){
+    let keyA = $(a).text();
+    let keyB = $(b).text();
+
+    if (keyA < keyB) return -1;
+    if (keyA > keyB) return 1;
+    return 0;
+  });
+  let select = $(select_list);
+  $.each(items, function(i, option){
+    select.append(option);
+  });
+};
+
 function generate_attributes(sides = 6, times = 6, dice = 3) {
   let results = []
   for (int = 0; int < times; int++) {
@@ -107,12 +123,50 @@ function generate_race(char_class = "none", attr = [], tries = 50) {
   return race_obj;
 };
 
+function generate_flw_class(origin = [], classlist = [], tries = 50) {
+  let class_return = "";
+  let class_origin = "";
+  let rounds = 0;
+  do {
+    class_return = classlist[getRandomInt(0, (classlist.length -1))];
+    class_origin = $.inArray(parseInt(flw_classes[class_return].origin), origin);
+    if (class_origin < 0) class_return = "";
+    if (class_return == "") { rounds++; } else { rounds = tries; }
+  } while (rounds < tries);
+  return class_return;
+};
+
+/* MORAL DESC: Para ello, tirará 2d6. Si el resultado de la tirada es superior a su puntuación de Moral, huirán o se rendirán. */
+function generate_flw_moral(value, tries = 0) {
+  let moral_test = 0;
+  let moral_result = value;
+  let rounds = 0;
+  do {
+    moral_test = getRandomInt(2, 12);
+    if (moral_test > moral_result) moral_result++;
+    if (moral_result > 10) moral_result = 10;
+    rounds++;
+  } while (rounds < tries);
+  return moral_result;
+};
+
 function generate_money(level = 1, sides = 12, mult = 10) {
   let starting_money = 0;
   for (i=0; i < level; i++) {
     starting_money += getRandomInt(2, (sides * 2)) * mult;
   };
   return starting_money;
+};
+
+function generate_coin_cost(gold) {
+  let return_str = "";
+  let gp = Math.floor(gold / 100);
+  if (gp > 0) { gold -= gp * 100; return_str += gp + " mo "; }
+  let sp = Math.floor(gold / 10);
+  if (sp > 0) { gold -= sp * 10; return_str += sp + " mp "; }
+  let cp = Math.floor(gold);
+  if (cp > 0) { gold -= cp * 1; return_str += cp + " mc "; }
+  return return_str;
 };
 
 function generate_tools(gold = 0, tools = [], tries = 50) {

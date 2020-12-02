@@ -47,7 +47,7 @@ var classes = {
       adv:    ["FUE: Derribar puertas", "CON: Recuperar energía", "Caza: En las Tierras Salvajes"],
       skills: ["Sacrificar escudo", "Recuperación", "Rajar"],
       tools:  [0, 1],
-      equip:  [0, 2, 3, 4, 5, 6, 8, 10, 12, 13],
+      equip:  [0, 2, 3, 4, 5, 6, 8, 10, 12, 13, 17],
       origin: 0,
       is_race: 0
     },
@@ -61,7 +61,7 @@ var classes = {
       adv:    ["DES: Trepar, abrir cerraduras con ganzúa y desactivar trampas", "Iniciativa: En combates en los que participe activamente", "Orientación: En las Tierras Salvajes"],
       skills: ["Combate con dos armas", "Ataque sorpresa"],
       tools:  [0, 1, 4],
-      equip:  [2, 6, 9],
+      equip:  [2, 6, 9, 17],
       origin: 0,
       is_race: 0
     },
@@ -117,7 +117,7 @@ var classes = {
       adv:    ["DES: Esconderse, ocultarse en la oscuridad, escaparse y evitar un ataque cuerpo a cuerpo de un enemigo igual o mayor que un humano ordinario", "Pesca: En las Tierras Salvajes"],
       skills: ["Buena fortuna", "En el último momento"],
       tools:  [0, 1, 4, 5],
-      equip:  [9, 14, 15, 16],
+      equip:  [9, 14, 15, 16, 17],
       origin: 0,
       is_race: 1
     },
@@ -145,7 +145,7 @@ var classes = {
       adv:    ["DES: Activar o reparar aparatos y mecanismos complejos", "INT: Descifrar enigmas o comprender el funcionamiento de máquinas"],
       skills: ["Visión en la oscuridad", "Lanzamiento de conjuros (gnomo)", "Fuente de maná"],
       tools:  [0, 1, 2, 4],
-      equip:  [9, 14, 15, 16],
+      equip:  [9, 14, 15, 16, 17],
       origin: 2,
       is_race: 1
     },
@@ -159,7 +159,7 @@ var classes = {
       adv:    ["CON: Resistir la parálisis y aguantar la respiración", "CAR: Resistir el encantamiento"],
       skills: ["Cuerpo blasfemo", "Maldición de los condenados", "Lanzamiento de conjuros (redivivo)"],
       tools:  [0, 1, 2, 3],
-      equip:  [10, 13],
+      equip:  [10, 13, 17],
       origin: 2,
       is_race: 1
     },
@@ -173,7 +173,7 @@ var classes = {
       adv:    ["CON: Resistir enfermedades", "CAR: Intimidar o fascinar a otros"],
       skills: ["Ala de ignominia", "Camino del Viento"],
       tools:  [0, 1],
-      equip:  [2, 6, 9, 11, 16],
+      equip:  [2, 6, 9, 11, 16, 17],
       origin: 2,
       is_race: 1
     },
@@ -187,7 +187,7 @@ var classes = {
       adv:    ["CON: Resistir enfermedades", "CAR: Intimidar o fascinar a otros"],
       skills: ["Ala de ignominia", "Camino de la Tierra"],
       tools:  [0, 1],
-      equip:  [3, 8, 9, 10, 12, 14],
+      equip:  [3, 8, 9, 10, 12, 14, 17],
       origin: 2,
       is_race: 1
     },
@@ -201,7 +201,7 @@ var classes = {
       adv:    ["CON: Resistir enfermedades", "CAR: Intimidar o fascinar a otros"],
       skills: ["Ala de ignominia", "Camino de la Urdimbre"],
       tools:  [0, 1],
-      equip:  [9, 11, 16],
+      equip:  [9, 11, 16, 17],
       origin: 2,
       is_race: 1
     },
@@ -215,7 +215,7 @@ var classes = {
       adv:    ["FUE: Romper objetos", "SAB: Detectar trampas o peligros", "Caza: En las Tierras Salvajes"],
       skills: ["Brutalidad", "Poderío salvaje", "Rabia primigenia"],
       tools:  [0, 1],
-      equip:  [10, 12, 13],
+      equip:  [10, 12, 13, 17],
       origin: 1,
       is_race: 0
     },
@@ -229,7 +229,7 @@ var classes = {
       adv:    ["DES: Evitar el daño por trampas", "CAR: Resistir el encantamiento"],
       skills: ["Argucias de bardo", "Cultura del viajero", "Entusiasmo", "Melodías mágicas"],
       tools:  [0, 1, 5],
-      equip:  [2, 6, 9, 10, 14],
+      equip:  [2, 6, 9, 10, 14, 17],
       origin: 1,
       is_race: 0
     }
@@ -407,23 +407,24 @@ var races = {
 /* PAQUETES DE EQUIPAMIENTO                                                   */
 /* -------------------------------------------------------------------------- */
 var equip_packs = [
-  [90,  "Paquete del héroe clásico", ["Cota de escamas (d8 / d10)", "Escudo mediano (+1 / d8)", "Espada larga (d8)", "Daga (d4)"]],             // 0
-  [120, "Paquete del clérigo", ["Coraza (d8 / d12)", "Escudo mediano (+1 / d8)", "Martillo de guerra (d8)"]],                                   // 1
-  [70,  "Paquete del arquero", ["Armadura de cuero (d6 / d6)", "Espada corta (d6)", "Arco largo (d8 / d8)", "Carcaj"]],                         // 2
-  [120, "Paquete del cruzado", ["Cota de mallas (d10 / d8)", "Espadón (d12)"]],                                                                 // 3
-  [35,  "Paquete del lancero", ["Cota de anillas (d8 / d6)", "Escudo pequeño (+1 / d6)", "Lanza (d6)", "Daga (d4)"]],                           // 4
-  [220, "Paquete del caballero", ["Armadura de bandas (d10 / d10)", "Escudo grande (+1 / d10)", "Mayal (d8)", "Maza (d6)"]],                    // 5
-  [140, "Paquete del ballestero", ["Armadura de cuero tachonado (d6 / d8)", "Martillo ligero (d4)", "Ballesta pesada (d10 / d8)", "Estuche"]],  // 6
-  [2,   "Paquete del mágico", ["Daga (d4)", "Bastón (d6)", "Honda (d4 / d10)", "Portabalines", "Balines (d10)"]],                               // 7
-  [70,  "Paquete del alabardero", ["Camisote de mallas (d8 / d8)", "Alabarda (d10)", "Espada corta (d6)"]],                                     // 8
-  [55,  "Paquete del bandido", ["Armadura de cuero (d6 / d6)", "Espada corta (d6)", "Ballesta ligera (d8 / d8)", "Estuche"]],                   // 9
-  [5,   "Paquete del cavernícola", ["Armadura de pieles (d6 / d6)", "Clava (d4)", "Clava (d4)", "Gran clava (d8)"]],                            // 10
-  [1,   "Paquete del aprendiz", ["Armadura acolchada (d4 / d4)", "Daga o Clava (d4)"]],                                                         // 11
-  [45,  "Paquete del bárbaro", ["Armadura de pieles (d6 / d6)", "Hacha de mano (d6)", "Hacha de mano (d6)", "Gran hacha (d12)"]],               // 12
-  [25,  "Paquete del incursor", ["Armadura de cuero (d6 / d6)", "Escudo mediano (+1 / d8)", "Daga (d4)", "Hacha de batalla (d8)"]],             // 13
-  [30,  "Paquete del trovador", ["Armadura de cuero (d6 / d6)", "Sombrero", "Espada ropera (d8)", "Daga (d4)"]],                                // 14
-  [20,  "Paquete del jóbito valiente", ["Armadura de cuero (d6 / d6)", "Escudo pequeño (+1 / d6)", "Espada corta (d6)", "Daga (d4)"]],          // 15
-  [5,   "Paquete del jóbito hondero", ["Armadura acolchada (d4 / d4)", "Honda (d4 / d10)", "Portabalines", "Balines (d10)"]]      			        // 16
+  [90,  "Paquete del héroe clásico",   ["Cota de escamas (d8 / d10)", "Escudo mediano (+1 / d8)", "Espada larga (d8)", "Daga (d4)"]],                // 0
+  [120, "Paquete del clérigo",         ["Coraza (d8 / d12)", "Escudo mediano (+1 / d8)", "Martillo de guerra (d8)"]],                                // 1
+  [70,  "Paquete del arquero",         ["Armadura de cuero (d6 / d6)", "Espada corta (d6)", "Arco largo (d8 / d8)", "Carcaj"]],                      // 2
+  [120, "Paquete del cruzado",         ["Cota de mallas (d10 / d8)", "Espadón (d12)"]],                                                              // 3
+  [35,  "Paquete del lancero",         ["Cota de anillas (d8 / d6)", "Escudo pequeño (+1 / d6)", "Lanza (d6)", "Daga (d4)"]],                        // 4
+  [220, "Paquete del caballero",       ["Armadura de bandas (d10 / d10)", "Escudo grande (+1 / d10)", "Mayal (d8)", "Maza (d6)"]],                   // 5
+  [140, "Paquete del ballestero",      ["Armadura de cuero tachonado (d6 / d8)", "Martillo ligero (d4)", "Ballesta pesada (d10 / d8)", "Estuche"]],  // 6
+  [2,   "Paquete del mágico",          ["Daga (d4)", "Bastón (d6)", "Honda (d4 / d10)", "Portabalines", "Balines (d10)"]],                           // 7
+  [70,  "Paquete del alabardero",      ["Camisote de mallas (d8 / d8)", "Alabarda (d10)", "Espada corta (d6)"]],                                     // 8
+  [55,  "Paquete del bandido",         ["Armadura de cuero (d6 / d6)", "Espada corta (d6)", "Ballesta ligera (d8 / d8)", "Estuche"]],                // 9
+  [5,   "Paquete del cavernícola",     ["Armadura de pieles (d6 / d6)", "Clava (d4)", "Clava (d4)", "Gran clava (d8)"]],                             // 10
+  [1,   "Paquete del aprendiz",        ["Armadura acolchada (d4 / d4)", "Daga o Clava (d4)"]],                                                       // 11
+  [45,  "Paquete del bárbaro",         ["Armadura de pieles (d6 / d6)", "Hacha de mano (d6)", "Hacha de mano (d6)", "Gran hacha (d12)"]],            // 12
+  [25,  "Paquete del incursor",        ["Armadura de cuero (d6 / d6)", "Escudo mediano (+1 / d8)", "Daga (d4)", "Hacha de batalla (d8)"]],           // 13
+  [30,  "Paquete del trovador",        ["Armadura de cuero (d6 / d6)", "Sombrero", "Espada ropera (d8)", "Daga (d4)"]],                              // 14
+  [20,  "Paquete del jóbito valiente", ["Armadura de cuero (d6 / d6)", "Escudo pequeño (+1 / d6)", "Espada corta (d6)", "Daga (d4)"]],               // 15
+  [5,   "Paquete del jóbito hondero",  ["Armadura acolchada (d4 / d4)", "Honda (d4 / d10)", "Portabalines", "Balines (d10)"]],     			             // 16
+  [30,  "Paquete del rufián",          ["Armadura de cuero (d6 / d6)", "Espada corta (d6)", "Espada corta (d6)", "Arco corto (d6 / d8)", "Carcaj"]]  // 17
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -435,5 +436,5 @@ var tool_packs = [
   [20, "Paquete de hechicería", ["Mochila", "Odre", "Antorcha (d8)", "3x Raciones (d6)", "Túnica", "Saco de dormir", "Yesquero", "Libro de conjuros"]],
   [8,  "Paquete del pío", ["Mochila", "Odre", "Antorcha (d8)", "7x Raciones (d6)", "Túnica", "Saco de dormir", "Yesquero", "Símbolo sagrado"]],
   [20, "Paquete de ladrón", ["Mochila", "Odre", "Bolsa de abrojos (d6)", "Antorcha (d6)", "3x Raciones (d6)", "Ropas comunes", "Saco de dormir", "Yesquero", "Herramientas de ladrón"]],
-  [20,  "Paquete del músico", ["Mochila", "Odre", "Antorcha (d8)", "3x Raciones (d6)", "Ropa elegante", "Saco de dormir", "Yesquero", "Laúd"]]
+  [20, "Paquete del músico", ["Mochila", "Odre", "Antorcha (d8)", "3x Raciones (d6)", "Ropa elegante", "Saco de dormir", "Yesquero", "Laúd"]]
 ];
