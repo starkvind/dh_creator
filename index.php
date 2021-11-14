@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" class="h-100">
   <head>
-    <title>Personajes aleatorios para Dungeon Hack</title>
+    <title>Generador aleatorio para Dungeon Hack</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Generador automático y configurable de personajes para el juego de rol Dungeon Hack.">
@@ -30,6 +30,10 @@
         max-width: 28px;
         padding-left: 6px;
       }
+      .char-seed i {
+        max-width: 12px;
+        max-height: 12px;
+      }
       .char-section:hover, .pointer:hover {
         cursor: pointer;
       }
@@ -42,6 +46,9 @@
       .dungeon-tile {
         padding: 0;
         margin: 0;
+      }
+      .modal-header, .modal-footer {
+        background-color: rgba(0,0,0,.03);
       }
       #pageTitle {
         text-align: center;
@@ -64,12 +71,13 @@
         <h1 class="mt-1" id="pageTitle"></h1>
         <div class="row" id="btnLanding">
           <div class="col text-center">
-            <button class="btn btn-success mb-2 gen-dh-char" alt="PJ básico a Nivel 1"><i class="fas fa-user-plus"></i></button>
+            <button class="btn btn-success mb-2 gen-dh-char gen-dh-quick" alt="PJ básico a Nivel 1"><i class="fas fa-user-plus"></i></button>
             <button class="btn btn-primary mb-2 gen-dh-char gen-dh-custom d-none" alt="PJ personalizado"><i class="fas fa-user-cog"></i></button>
-            <button class="btn btn-info mb-2 dh-dice-test" alt="Generar matriz de características"><i class="fas fa-dice"></i></button>
+            <button class="btn btn-success mb-2 gen-flw d-none" alt="Generar seguidor"><i class="fas fa-user-ninja"></i></button>
+            <button class="btn btn-info mb-2 dh-dice-test d-none" alt="Generar matriz de características"><i class="fas fa-dice"></i></button>
+            <button class="btn btn-warning mb-2 dh-gen-dung text-white d-none" alt="Generar mazmorra"><i class="fas fa-dungeon"></i></button>
             <button class="btn btn-secondary mb-2 dh-options" alt="Configuración"><i class="fas fa-cogs"></i></button>
-            <button class="btn btn-danger mb-2 d-none" id="resetBtn" alt="Borrar todos los PJ"><i class="fas fa-trash"></i></button>
-            <button class="btn btn-warning mb-2 dh-gen-dung" alt="Generar mazmorra"><i class="fas fa-dungeon"></i></button>
+            <button class="btn btn-danger mb-2 d-none" id="resetBtn" alt="Borrar todas las tarjetas"><i class="fas fa-trash"></i></button>
           </div>
         </div>
         <div class="row" id="charLanding">
@@ -79,30 +87,29 @@
     <footer class="footer mt-auto py-3">
       <div class="container">
         <p class="text-muted text-center font-italic">
-          Generador de PJ por <a href="https://naufragio.net/maurick-starkvind/" target="_new">Maurick Starkvind</a>.
-          Dungeon Hack pertenece a la editorial <strong>YipiKaYei</strong>.
+          Generador de personajes (v.<span id="gen-id"></span>) por <a href="https://naufragio.net/maurick-starkvind/" target="_new" rel="nofollow noreferrer">Maurick Starkvind</a>.
+          Dungeon Hack pertenece a la editorial <strong><a href="https://www.drivethrurpg.com/browse/pub/13021/Yipi-Ka-Yei" target="_new" rel="nofollow noreferrer">YipiKaYei</a></strong>.
         </p>
       </div>
     </footer>
     <!-- Modals -->
-    <div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
+    <!-- Modal Config -->
+    <div class="modal fade" id="configModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="configModalLabel">Configuración</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
           </div>
           <div class="modal-body">
+            <h6 class="border-bottom pb-1 mb-3">Personaje</h6>
             <!-- Niveles -->
             <div class="input-group input-group-sm mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="label-min-level">Nivel mínimo</span>
+                <span class="input-group-text" id="label-min-level">Nvl mínimo</span>
               </div>
               <input type="text" class="form-control" id="value-min-level" aria-label="Nivel mínimo" aria-describedby="label-min-level">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="label-max-level">Nivel máximo</span>
+                <span class="input-group-text" id="label-max-level">Nvl máximo</span>
               </div>
               <input type="text" class="form-control" id="value-max-level" aria-label="Nivel máximo" aria-describedby="label-max-level">
             </div>
@@ -111,30 +118,77 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="label-origins">Orígenes</span>
               </div>
-              <select class="selectpicker" id="value-origin" arial-label="Orígenes" aria-describedby="label-origins" data-size="10" data-live-search="true" data-actions-box="true" data-selected-text-format="count > 2" multiple>
+              <select class="selectpicker" id="value-origin" arial-label="Orígenes" aria-describedby="label-origins" data-header="Origen del contenido" data-size="10" data-live-search="true" data-actions-box="true" data-count-selected-text= "{0} orígenes" data-selected-text-format="count > 2" multiple>
               </select>
             </div>
-            <!-- Clases -->
-            <div class="input-group form-group-sm mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="label-classes">Clases</span> <!--  data-width="85%"  -->
-              </div>
-              <select class="selectpicker" id="available-classes" arial-label="Clases" aria-describedby="label-classes" data-size="10" data-live-search="true" data-actions-box="true" data-selected-text-format="count > 2" multiple>
+            <!-- Clases & Razas -->
+            <div class="input-group input-group-sm mb-3">
+              <select class="selectpicker" id="available-classes" arial-label="Clases" aria-describedby="label-classes" data-header="Clases de personaje" data-size="10" data-live-search="true" data-actions-box="true" data-count-selected-text= "{0} clases" data-selected-text-format="count > 2" multiple>
+              </select>
+              <select class="selectpicker ml-3" id="available-races" arial-label="Especies" data-header="Especies de personaje" data-size="10" data-live-search="true" data-actions-box="true" data-count-selected-text= "{0} especies" data-selected-text-format="count > 2" multiple>
               </select>
             </div>
-            <!-- Razas -->
+            <!-- Seguidores -->
+            <h6 class="border-bottom pb-1 mb-3">Seguidores</h6>
+            <div class="input-group input-group-sm mb-3">
+              <select class="selectpicker" id="available-followers" arial-label="Seguidores" aria-describedby="label-followers" data-header="Profesiones de seguidores" data-size="10" data-live-search="true" data-actions-box="true" data-count-selected-text= "{0} profesiones" data-selected-text-format="count > 2" multiple>
+              </select>
+            </div>
+            <!-- Otras opciones -->
+            <h6 class="border-bottom pb-1">Opciones</h6>
             <div class="input-group input-group-sm mb-3">
               <div class="custom-control custom-checkbox pt-2">
-                <input type="checkbox" class="custom-control-input pointer" id="value-races">
-                <label class="custom-control-label pointer" for="value-races">Especies</label> <!--  data-width="78.5%"  -->
+                <input type="checkbox" class="custom-control-input pointer" id="value-export-btn">
+                <label class="custom-control-label pointer mr-2" for="value-export-btn" alt="Exportar ficha a texto"><i class="far fa-file-alt"></i></label>
               </div>
-              <select class="selectpicker ml-3" id="available-races" arial-label="Especies" data-size="10" data-live-search="true" data-actions-box="true" data-selected-text-format="count > 2" multiple>
-              </select>
+              <div class="custom-control custom-checkbox pt-2">
+                <input type="checkbox" class="custom-control-input pointer" id="value-races">
+                <label class="custom-control-label pointer mr-2" for="value-races" alt="Usar especies"><i class="fas fa-dragon"></i></label>
+              </div>
+            </div>
+            <h6 class="border-bottom pb-1">Botones</h6>
+            <div class="input-group input-group-sm mb-3">
+              <div class="custom-control custom-checkbox pt-2">
+                <input type="checkbox" class="custom-control-input pointer" id="value-quick-char">
+                <label class="custom-control-label pointer mr-2" for="value-quick-char" alt="Activar botón PJ básico a Nivel 1"><i class="fas fa-user-plus"></i></label>
+              </div>
+              <div class="custom-control custom-checkbox pt-2">
+                <input type="checkbox" class="custom-control-input pointer" id="value-custom-char">
+                <label class="custom-control-label pointer mr-2" for="value-custom-char" alt="Activar botón PJ personalizado"><i class="fas fa-user-cog"></i></label>
+              </div>
+              <div class="custom-control custom-checkbox pt-2">
+                <input type="checkbox" class="custom-control-input pointer" id="value-flw">
+                <label class="custom-control-label pointer mr-2" for="value-flw" alt="Activar botón Crear seguidor"><i class="fas fa-user-ninja"></i></label>
+              </div>
+              <div class="custom-control custom-checkbox pt-2">
+                <input type="checkbox" class="custom-control-input pointer" id="value-matrix">
+                <label class="custom-control-label pointer mr-2" for="value-matrix" alt="Activar botón Generar matrices"><i class="fas fa-dice"></i></label>
+              </div>
+              <div class="custom-control custom-checkbox pt-2">
+                <input type="checkbox" class="custom-control-input pointer" id="value-dungeons">
+                <label class="custom-control-label pointer" for="value-dungeons" alt="Activar botón Generar mazmorras"><i class="fas fa-dungeon"></i></label>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="save-dh-config"><i class="fas fa-save"></i></button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times-circle"></i></button>
+              <button type="button" class="btn btn-primary float-center" id="save-dh-config"><i class="fas fa-save"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Seed -->
+    <!-- Modal -->
+    <div class="modal fade" id="seedModal" tabindex="-1" aria-labelledby="seedModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="seedModalLabel"><span id="charSeedName"></span></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <textarea class="form-control" id="charSeedBody" rows="4"></textarea>
           </div>
         </div>
       </div>
@@ -150,15 +204,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <!-- -->
     <script src="dh-var.js" type="text/javascript"></script>
-    <script src="dh-cg.js" type="text/javascript"></script>
+    <script src="dh-flw.js" type="text/javascript"></script>
+    <script src="dh-cg.js"  type="text/javascript"></script>
     <!-- -->
     <script type="text/javascript">
       $(document).ready(function() {
+        /* Versión del pograma */
+        let dh_gen_version = "1.4";
+        $("#gen-id").text(dh_gen_version);
         /* Ponemos el título adecuado. */
         let title = document.getElementsByTagName("title")[0].innerHTML;
         $("#pageTitle").text(title);
         let butns = $("#btnLanding").find("button");
         $(butns).each(function() {
+          $(this).attr("title", $(this).attr("alt"));
+        });
+        $("label, button").each(function() {
           $(this).attr("title", $(this).attr("alt"));
         });
         /* Preparamos las opciones. */
@@ -187,6 +248,7 @@
         });
         if (class_list.length > 0) {
           $("#available-classes").html(classes_options);
+          sort_select_list("#available-classes");
           $("#available-classes").selectpicker("refresh");
         };
         /* Finalizamos desplegable de Clases. */
@@ -206,14 +268,44 @@
         });
         if (race_list.length > 0) {
           $("#available-races").html(races_options);
+          sort_select_list("#available-races");
           $("#available-races").selectpicker("refresh");
         };
         /* Finalizamos desplegable de Razas. */
+        /* Preparamos la variable de profesiones de seguidores. */
+        let flw_class_i = 0;
+        /* Por cada entrada en las Clases, añadimos su key al array class_list. */
+        for (let key_flw in flw_classes) {
+          flw_class_list[flw_class_i] = key_flw;
+          flw_class_i++;
+        };
+        flw_class_list.sort();
+        /* Preparamos el desplegable de Seguidores. */
+        let flw_options = "";
+        $(flw_class_list).each(function(index, value) {
+          flw_options += "<option value='" + value + "' data-subtext='" + origins[flw_classes[value].origin] + "'>" + flw_classes[value].name + "</option>";
+        });
+        if (flw_class_list.length > 0) {
+          $("#available-followers").html(flw_options);
+          sort_select_list("#available-followers");
+          $("#available-followers").selectpicker("refresh");
+        };
+        /* Otras opciones */
+        $("#value-export-btn").prop("checked", true);
+        /* Botones */
+        $("#value-quick-char").prop("checked", true);
+        $("#value-custom-char").prop("checked", false);
+        $("#value-matrix").prop("checked", false);
+        $("#value-dungeons").prop("checked", false);
+        $("#value-flw").prop("checked", false);
       });
       $(document).on("click", ".char-close", function() {
         let parent = $(this).parent().parent();
-        parent.remove();
-        update_charcount();
+        parent.addClass("fade");
+        setTimeout(function () {
+          parent.remove();
+          update_charcount();
+        }, 100);
       });
       $(document).on("click", ".char-section", function() {
         let list = $(this).parent().find("ul");
@@ -227,23 +319,30 @@
         $("#value-max-level").val(level_max_config);
         $("#value-origin").val(origin_config);
         $("#value-origin").selectpicker("refresh");
-        /* Desplegable de Razas. */
+        /* Actualizamos la lista de razas */
         $("#available-races").val(race_list);
-        check_if_races($("#value-races"));
+        check_checkbox($("#value-races"), "#available-races");
+        /* Actualizamos la lista de clases */
         $("#available-classes").val(class_list);
         $("#available-classes").selectpicker("refresh");
+        /* Actualizamos la lista de seguidores */
+        $("#available-followers").val(flw_class_list);
+        check_checkbox($("#value-flw"), "#available-followers");
       });
-      $(document).on("click", "#value-races", function() {
-        check_if_races($(this));
-      });
-      function check_if_races(selector) {
+      function check_checkbox(selector, target) {
         if ($(selector).prop("checked")) {
-          $("#available-races").prop("disabled", false);
+          $(target).prop("disabled", false);
         } else {
-          $("#available-races").prop("disabled", true);
+          $(target).prop("disabled", true);
         };
-        $("#available-races").selectpicker("refresh");
+        $(target).selectpicker("refresh");
       };
+      $(document).on("click", "#value-races", function() {
+        check_checkbox($(this), "#available-races");
+      });
+      $(document).on("click", "#value-flw", function() {
+        check_checkbox($(this), "#available-followers");
+      });
       $(document).on("click", "#save-dh-config", function() {
         /* Obtenemos variables. */
         let min_lvl = $("#value-min-level").val();
@@ -251,6 +350,12 @@
         let origin_val = $("#value-origin").val() + "";
         let origin_check = [];
         let use_race = $("#value-races").prop("checked");
+        /* Variables botones adicionales */
+        let use_quick_char = $("#value-quick-char").prop("checked");
+        let use_custom_char = $("#value-custom-char").prop("checked");
+        let use_matrix = $("#value-matrix").prop("checked");
+        let use_dungeons = $("#value-dungeons").prop("checked");
+        let use_flw = $("#value-flw").prop("checked");
         /* Hacemos comprobaciones. */
         if (min_lvl > 0 && min_lvl <= 36 && max_lvl > 0 && max_lvl <= 36) {
           level_min_config = min_lvl;
@@ -279,9 +384,19 @@
         } else {
           race_config = 0;
         };
+        /* Configuración de los Seguidores. */
+        let flw_check = $("#available-followers").val();
+        if (flw_check.length > 0) flw_class_list = flw_check;
+        /* Otras configuraciones */
+        if (use_quick_char)  { $(".gen-dh-quick").removeClass("d-none"); } else { $(".gen-dh-quick").addClass("d-none"); }
+        if (use_custom_char) { $(".gen-dh-custom").removeClass("d-none"); } else { $(".gen-dh-custom").addClass("d-none"); }
+        if (use_flw)         { $(".gen-flw").removeClass("d-none"); } else { $(".gen-flw").addClass("d-none"); }
+        if (use_matrix)      { $(".dh-dice-test").removeClass("d-none"); } else { $(".dh-dice-test").addClass("d-none"); }
+        if (use_dungeons)    { $(".dh-gen-dung").removeClass("d-none"); } else { $(".dh-gen-dung").addClass("d-none"); }
+        /* Aplicamos cambios en la página */
         $("#configModal").modal("hide");
-        $(".gen-dh-custom").removeClass("d-none");
       });
+      /* Botón generar PJ */
       $(document).on("click", ".gen-dh-char", function() {
         let check = $(this).hasClass("gen-dh-custom");
         let c_list = class_basic_list;
@@ -299,10 +414,10 @@
         gen_char(opt, ori, lvl_mn, lvl_mx, c_list);
       });
       $(document).on("click", "#resetBtn", function() {
-        $(".card").each(function() {
-          $(this).remove();
+        $(".char-close").each(function() {
+          $(this).click();
         });
-        update_charcount();
+        /*$(".card").each(function() { $(this).remove(); }); update_charcount();*/
       });
       $(document).on("click", ".dh-dice-test", function() {
         start_random_dice_test(10, 6, attribs.length);
@@ -321,8 +436,173 @@
           $("#resetBtn").addClass("d-none");
         };
       };
-
+      /* FPJ para copiar */
+      $(document).on("click", ".char-sheet", function() {
+        let sheet = $(this).parent().parent();
+        /* Abrimos todos las secciones */
+        $(sheet).find(".char-section").each(function() {
+          if ($(this).next().hasClass("d-none")) $(this).next().removeClass("d-none");
+        });
+        let sheet_arr = [];
+        let sheet_text = "";
+        let count = 0;
+        $(sheet.find("div")).each(function(i, c) {
+          count = 0;
+          count += getOccurrence(c.classList, "card-body");
+          count += getOccurrence(c.classList, "row");
+          if (count < 1) sheet_arr[sheet_arr.length] = c.innerText;
+        });
+        if (sheet_arr.length > 0) {
+          $("#charSeedName").text("Hoja de personaje");
+          $(sheet_arr).each(function(si, sc) {
+            sheet_text += sc;
+            if (si < (sheet_arr.length -1)) sheet_text += "\n\n";
+          });
+          $(sheet).find(".char-section").each(function() {
+            $(this).next().addClass("d-none");
+          });
+          $("#charSeedBody").text(sheet_text);
+          $("#seedModal").modal("show");
+        };
+      });
+      $(document).on("click", ".char-seed", function() {
+        let seed = $(this).attr("data-seed");
+        show_char_seed(seed);
+      });
+      function show_char_seed(seed) {
+        if (seed) {
+          let seed_arr = seed.split(",");
+          $("#charSeedName").text("Semilla de " + seed_arr[0]);
+          $("#charSeedBody").text(seed);
+          $("#seedModal").modal("show");
+        };
+      };
+      /* Botón generar seguidor */
+      $(document).on("click", ".gen-flw", function() {
+        let c_list = flw_class_list;
+        let opt = race_config;
+        let ori = origin_config;
+        let lvl_mn = level_min_config;
+        let lvl_mx = level_max_config;
+        gen_flw(opt, ori, lvl_mn, lvl_mx, c_list);
+      });
+      /* Generar seguidor */
+      function gen_flw(race = 0, origin = [], lvl_min = 1, lvl_max = 1, classlist = []) {
+        /* Vamos a ver si tenemos las razas activadas. */
+        let use_race    = $("#value-races").prop("checked");
+        /* Variables del seguidor */
+        let flw_race    = "";
+        if (use_race)   flw_race = getRandomInt(0, (race_list.length - 1));
+        let flw_class   = generate_flw_class(origin, classlist);
+        let flw_name    = flw_names[getRandomInt(0, (flw_names.length - 1))];
+        let flw_align   = aligns[getRandomInt(0, (aligns.length -1))];
+        /* ------------------------------------------------------------------ */
+        let flw_level   = getRandomInt(lvl_min, lvl_max);
+        if (flw_level > 30) flw_level = 30;
+        /* ------------------------------------------------------------------ */
+        let flw_title   = flw_classes[flw_class].name + " de nivel " + flw_level;
+        if (use_race)   flw_title = races[race_list[flw_race]].name + " " + flw_title.toLowerCase();
+        /* ------------------------------------------------------------------ */
+        let flw_origin  = origins[flw_classes[flw_class].origin];
+        let flw_outs    = flw_classes[flw_class].outs;
+        let flw_cost    = generate_coin_cost(flw_classes[flw_class].cost * Math.max(1, Math.floor(flw_level / 5)));
+        /* ------------------------------------------------------------------ */
+        let flw_attr    = generate_attributes(6, flw_attribs.length);
+        let flw_atr_mod = flw_classes[flw_class].attr;
+        /* ------------------------------------------------------------------ */
+        let flw_skills = flw_classes[flw_class].skills;
+        let flw_set_skill = flw_skills[0];
+        if (flw_skills.length > 2) flw_set_skill = flw_skills[getRandomInt(0, (flw_skills.length -1))];
+        /* ------------------------------------------------------------------ */
+        let flw_equip  = flw_classes[flw_class].equip;
+        /* ------------------------------------------------------------------ */
+        let final_card = "<div class='card m-2 card-char' style='width: 32rem;'>";
+        final_card += "<div class='card-header'>";
+        final_card += "<button type='button' class='close char-close float-right' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
+        final_card += "<h5 class='card-title char-name'>" + flw_name + "</h5>";
+        final_card += "<h6 class='card-subtitle text-muted'>" + flw_title + "</h6>";
+        final_card += "</div>";
+        final_card += "<div class='card-body'>";
+        final_card += "<div class='row'>";
+        /* Atributos */
+        let attr_results = "";
+        if (flw_attr.length > 0) {
+          let temp_value = 0;
+          /* Subida de Nivel de Atributos */
+          let level_up_attr = flw_level - 1;
+          let level_up_attr_arr = [];
+          let level_up_attr_log = [];
+          let level_up_attr_count = 0;
+          if (level_up_attr > 0) {
+            for (lva = 0; lva < level_up_attr; lva++) {
+              level_up_attr_arr[lva] = getRandomInt(0, (flw_attr.length -1));
+              /* Evitamos que se coja dos veces el mismo Atributo. */
+              if (level_up_attr_arr[lva] == level_up_attr_arr[lva - 1]) {
+                /* Mientras el Atributo actual sea el mismo que el anterior, lo tiramos de nuevo. */
+                do {
+                  level_up_attr_arr[lva] = getRandomInt(0, (flw_attr.length -1));
+                } while (level_up_attr_arr[lva] == level_up_attr_arr[lva - 1]);
+              };
+              /* Registramos la subida de nivel. */
+              level_up_attr_log[lva] = "Nivel " + (Math.floor(lva / 2) + 2) + ": " + flw_attribs[level_up_attr_arr[lva]];
+            };
+          };
+          $(flw_attr).each(function(index, value) {
+            level_up_attr_count = 0;
+            temp_value = value;
+            temp_value += flw_atr_mod[index];
+            attr_results += "<strong>" + flw_attribs[index] + "</strong>: ";
+            level_up_attr_count = getOccurrence(level_up_attr_arr, index);
+            temp_value = generate_char_lvl_up(temp_value, level_up_attr_count);
+            attr_results += "<span class='question' title='" + "Mod: " + flw_atr_mod[index] + ", Progreso: " + temp_value[1] +"'>" + temp_value[0] + "</span>+";
+            if (index < (flw_attr.length -1)) attr_results += "<br />";
+          });
+          final_card += "<div class='col-7 attr-results'>" + attr_results + "</div>";
+        };
+        /* Otros recursos */
+        let flw_align_text = "<strong>Alineamiento</strong>: " + flw_align;
+        let flw_st_hp = generate_char_health(flw_classes[flw_class].hp, flw_level, 0);
+        let flw_hp = "<strong>Salud</strong>: " + "<span class='question' title='" + flw_st_hp[1] + "'>" + flw_st_hp[0] + "</span> (d" + flw_classes[flw_class].hp + ")";
+        let flw_moral_tries = flw_level - 1;
+        let flw_moral = generate_flw_moral(flw_classes[flw_class].mo, flw_moral_tries);
+        //if (char_level > 9) char_st_en += 1;
+        let flw_mo = "<strong>Moral</strong>: " + flw_moral;
+        final_card += "<div class='col-5 pt-results'>" + flw_align_text + "<br />" + flw_hp + "<br />" + flw_mo + "</div>";
+        final_card += "</div>";
+        final_card += "<div class='row mt-3'>";
+        if (flw_skills.length > 0) {
+          /* Habilidates y competencias */
+          final_card += "<div class='col-12 border-top'>";
+          final_card += "<h6 class='mt-3 font-weight-bold'><i class='fas fa-fire'></i> Habilidad</h6>" + "<p>" + flw_set_skill + "</p>";
+          final_card += "</div>";
+        };
+        if (flw_equip.length > 0) {
+          final_card += "<div class='col-12 border-top'>";
+            final_card += "<h6 class='mt-3 font-weight-bold char-section'><i class='fas fa-hammer'></i> Equipo</h6>";
+            final_card += "<ul class='d-none'>";
+            $(flw_equip).each(function(fei, fev) {
+              final_card += "<li>" + fev + "</li>";
+            });
+            final_card + "</ul>";
+          final_card += "</div>";
+        };
+        if (flw_outs < 1) final_card += "<div class='col-12 border-top mt-2 pt-3'><p><em>No acepta realizar sus servicios fuera de zonas civilizadas.</em></p></div>";
+        final_card += "</div>";
+        final_card += "</div>";
+        /* Pie de tarjeta */
+        final_card += "<div class='card-footer'>";
+          final_card += "<span class='float-left text-muted font-italic'><strong>Origen:</strong> " + flw_origin + "</span>";
+          final_card += "<span class='float-right question' title='Coste por día'><i class='fas fa-coins'></i> " + flw_cost + " al día</span>";
+        final_card += "</div>";
+        /* Cerramos tarjeta */
+        final_card += "</div>";
+        /* Adjuntamos la tarjeta a la landing zone */
+        $("#charLanding").prepend(final_card);
+        update_charcount();
+      };
+      /* Generar PJ */
       function gen_char(race = 0, origin = [], lvl_min = 1, lvl_max = 1, classlist = []) {
+        let char_seed     = [];
         /* Variables básico PJ */
         let char_class    = generate_class(origin, classlist);
         let char_name     = classes[char_class].names[getRandomInt(0, (classes[char_class].names.length -1))]
@@ -341,7 +621,7 @@
         /* Empezamos a generar Atributos */
         /* Definimos el atributo favorito de la clase. */
         if (classes[char_class].attr.length > 1) char_fav_attr = classes[char_class].attr[getRandomInt(0, (classes[char_class].attr.length -1))];
-        let attr          = generate_attributes(6, 6);
+        let attr          = generate_attributes(6, attribs.length);
         /* Preparamos la raza del personaje. */
         let char_race     = generate_race(char_class, attr);
         if (race > 0) char_title = char_race.name + " " + char_title.toLowerCase();
@@ -352,10 +632,26 @@
         if (char_tools.length > 0) char_money = char_tools[0];
         let char_equip = generate_equip(char_money, char_av_equip);
         if (char_equip.length > 0) char_money = char_equip[0];
+        /* Registramos semilla */
+        char_seed[char_seed.length] = char_name;
+        char_seed[char_seed.length] = classes[char_class].name;
+        if (race > 0 && char_is_race == 0) char_seed[(char_seed.length - 1)] = char_race.name +  " " + char_seed[(char_seed.length - 1)].toLowerCase();
+        char_seed[char_seed.length] = char_align;
+        char_seed[char_seed.length] = char_level;
+        char_seed[char_seed.length] = attr;
+        char_seed[char_seed.length] = char_equip[1][1];
+        char_seed[char_seed.length] = char_tools[1][1];
+        char_seed[char_seed.length] = char_money;
+        /* Botones de semilla hoja */
+        let seed_btn = $("#value-export-btn").prop("checked");
         /* Generamos la tarjeta */
         let final_card = "<div class='card m-2 card-char' style='width: 32rem;'>";
         final_card += "<div class='card-header'>";
-        final_card += "<button type='button' class='close char-close float-right' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"
+        final_card += "<button type='button' class='close char-close float-right' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
+        if (seed_btn) {
+          /*final_card += "<button type='button' class='close char-seed float-right mr-3' aria-label='Seed' data-seed='" + char_seed + "'><span aria-hidden='true'><i class='fas fa-seedling'></i></span></button>";*/
+          final_card += "<button type='button' class='close char-sheet float-right mr-2' aria-label='Sheet' title='Exportar PJ a texto plano'><span aria-hidden='true'><i class='far fa-file-alt'></i></span></button>";
+        };
         final_card += "<h5 class='card-title char-name'>" + char_name + "</h5>";
         final_card += "<h6 class='card-subtitle text-muted'>" + char_title + "</h6>";
         final_card += "</div>";
@@ -395,11 +691,11 @@
             attr_results += "<strong>" + attribs[index] + "</strong>: ";
             if (index == char_fav_attr) {
               temp_value--;
-              attr_icon += " <span title='Caracter&iacute;stica favorita'><i class='fas fa-star'></i></span>";
+              attr_icon += " <i class='fas fa-star' alt='Caracter&iacute;stica favorita' title='Caracter&iacute;stica favorita'></i>";
             };
             if (race > 0 && index == rndm_buen_des && check_buen_des >= 0) {
               temp_value--;
-              attr_icon += " <span title='Buen desarrollo'><i class='fas fa-fist-raised'></i></span>";
+              attr_icon += " <i class='fas fa-fist-raised' alt='Buen desarrollo' title='Buen desarrollo'></i></span>";
             };
             level_up_attr_count = getOccurrence(level_up_attr_arr, index);
             if (index == char_fav_attr && level_up_attr_count > 0) level_up_attr_count * 2;
@@ -486,12 +782,6 @@
             final_card += "</div>";
           };
         final_card += "</div>";
-        /* SEMILLA */
-        final_card += "<div class='row text-muted font-italic d-none'>";
-          final_card += "<div class='col-12 border-top pt-3'>";
-            final_card += "<strong>Semilla:</strong> " + attr + "," + char_class + "," + char_tools[2] + "," + char_equip[2];
-          final_card += "</div>";
-        final_card += "</div>";
         final_card += "</div>";
         /* Pie de tarjeta */
         final_card += "<div class='card-footer'>";
@@ -503,6 +793,7 @@
         final_card += "</div>";
         /* Adjuntamos la tarjeta a la landing zone */
         $("#charLanding").prepend(final_card);
+        /*$("#charLanding .card-char").first().addClass("in");*/
         update_charcount();
       };
       /* Tiradas varias. */
