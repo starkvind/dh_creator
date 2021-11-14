@@ -1,2 +1,2 @@
-# Ignoramos el directorio .old
-/old
+# Don't track content of these folders
+.old/
