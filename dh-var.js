@@ -232,6 +232,20 @@ var classes = {
       equip:  [2, 6, 9, 10, 14, 17],
       origin: 1,
       is_race: 0
+    },
+    warlord : {
+      name:   "Belisario",
+      names:  ["Brienne", "Ceres", "Terra", "Martina", "Nêrra", "Xenobia", "Arcturus", "Cócito", "Ebenezer", "Locke", "Ichabod", "Tormund"],
+      attr:   [0, 3, 5], // CAR
+      hp:     8,
+      en:     4,
+      prof:   "Cualquier arma existente y armadura hasta la cota de mallas. También escudos pequeños y medios.",
+      adv:    ["INT: Reconocer puntos débiles en los enemigos", "CAR: Asegurar y/o reforzar la lealtad de los seguidores", "Iniciativa: En combates en los que participe activamente como líder."],
+      skills: ["Presencia intimidante", "Órdenes de batalla"],
+      tools:  [0, 1],
+      equip:  [0, 1, 2, 3, 4, 5, 6, 8],
+      origin: 1,
+      is_race: 0
     }
 };
 
