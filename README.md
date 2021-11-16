@@ -1,4 +1,4 @@
-# Creador de personajes, seguidores y otro contenido para Dungeon Hack
+# Creador de personajes y seguidores para Dungeon Hack
 
 por Maurick Starkvind (@starkvind)
 
@@ -22,3 +22,9 @@ Ylat es nuestro escenario de campaña de ambientación fantástica, que bebe de 
 
 - https://naufragio.net/tag/ylat/
 - https://naufragio.net/dungeon-hack/
+
+## Librerías de terceros
+
+- https://fontawesome.com/
+- https://jquery.com/
+- https://getbootstrap.com/
