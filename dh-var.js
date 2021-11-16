@@ -236,7 +236,7 @@ var classes = {
     warlord : {
       name:   "Belisario",
       names:  ["Brienne", "Ceres", "Terra", "Martina", "Nêrra", "Xenobia", "Arcturus", "Cócito", "Ebenezer", "Locke", "Ichabod", "Tormund"],
-      attr:   [0, 3, 5], // CAR
+      attr:   [0, 3, 5], // FUE, INT, CAR
       hp:     8,
       en:     4,
       prof:   "Cualquier arma existente y armadura hasta la cota de mallas. También escudos pequeños y medios.",
@@ -244,6 +244,20 @@ var classes = {
       skills: ["Presencia intimidante", "Órdenes de batalla"],
       tools:  [0, 1],
       equip:  [0, 1, 2, 3, 4, 5, 6, 8],
+      origin: 1,
+      is_race: 0
+    },
+    warlock : {
+      name:   "Brujo",
+      names:  ["Angélica", "Circe", "Jalis", "Locasta", "Morgana", "Rita", "Alastor", "Belegur", "Fabián", "Gwyon", "Raymond", "Teseo"],
+      attr:   [2, 5], // CON, CAR
+      hp:     6,
+      en:     2,
+      prof:   "Cualquier arma ligera, bastones, espadas largas, espadas roperas, látigos, guadañas, cerbatanas y hondas; y te puedes equipar armaduras acolchadas y armaduras de cuero.",
+      adv:    ["CON: Resistir enfermedades", "INT: Descifrar conjuros o rituales mágicos"],
+      skills: ["Lanzamiento de conjuros (brujo)", "Esbirro familiar", "Rebote arcano"],
+      tools:  [0, 1, 2],
+      equip:  [7, 11, 14, 19],
       origin: 1,
       is_race: 0
     }
@@ -438,7 +452,9 @@ var equip_packs = [
   [30,  "Paquete del trovador",        ["Armadura de cuero (d6 / d6)", "Sombrero", "Espada ropera (d8)", "Daga (d4)"]],                              // 14
   [20,  "Paquete del jóbito valiente", ["Armadura de cuero (d6 / d6)", "Escudo pequeño (+1 / d6)", "Espada corta (d6)", "Daga (d4)"]],               // 15
   [5,   "Paquete del jóbito hondero",  ["Armadura acolchada (d4 / d4)", "Honda (d4 / d10)", "Portabalines", "Balines (d10)"]],     			             // 16
-  [30,  "Paquete del rufián",          ["Armadura de cuero (d6 / d6)", "Espada corta (d6)", "Espada corta (d6)", "Arco corto (d6 / d8)", "Carcaj"]]  // 17
+  [30,  "Paquete del rufián",          ["Armadura de cuero (d6 / d6)", "Espada corta (d6)", "Espada corta (d6)", "Arco corto (d6 / d8)", "Carcaj"]], // 17
+  [95,  "Paquete del belisario",       ["Cota de mallas (d10 / d8)", "Escudo mediano (+1 / d8)", "Morrión (+1 / d6)", "Hacha de batalla (d8)"]],     // 18
+  [15,  "Paquete del brujo",           ["Armadura de cuero (d6 / d6)", "Daga (d4)", "Guadaña (d10)"]]                                                // 19
 ];
 
 /* -------------------------------------------------------------------------- */
