@@ -260,6 +260,20 @@ var classes = {
       equip:  [7, 11, 14, 19],
       origin: 1,
       is_race: 0
+    },
+    hunter : {
+      name:   "Cazador",
+      names:  ["Avana", "Dora", "Isarrel", "Saria", "Valindrys", "Yralisia", "Anfalen", "Corym", "Haldir", "Ruan", "Torlus", "Wilfred"],
+      attr:   [1, 4], // DES, SAB
+      hp:     6,
+      en:     3,
+      prof:   "Puedes llevar todas las armas ligeras, armas cuerpo a cuerpo de una mano, guadañas, gujas, tridentes y armas a distancia. Te puedes poner armaduras acolchadas, de cuero, de pieles y de cuero tachonado, además de escudos pequeños.",
+      adv:    ["SAB: Seguir rastros", "Caza: En las Tierras Salvajes", "Orientación: En cualquier lugar salvo subterráneos"],
+      skills: ["Compañero animal", "Marca del cazador"],
+      tools:  [0, 1, 4],
+      equip:  [2, 6, 9, 11, 17],
+      origin: 1,
+      is_race: 0
     }
 };
 
