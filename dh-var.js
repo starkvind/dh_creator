@@ -274,6 +274,34 @@ var classes = {
       equip:  [2, 6, 9, 11, 17],
       origin: 1,
       is_race: 0
+    },
+    warden : {
+      name:   "Celador",
+      names:  ["Ayla", "Dihnunah", "Fern", "Nimara", "Sevsda", "Yun", "Elerion", "Findorian", "Stavos", "Theon", "Vaelar", "Zatch"],
+      attr:   [1, 2, 4], // DES, CON, SAB
+      hp:     4,
+      en:     2,
+      prof:   "Puedes utilizar cualquier arma arrojadiza, cualquier arma a distancia y armas cuerpo a cuerpo ligeras. Te puedes equipar armaduras acolchadas y de cuero, pero ningún escudo.",
+      adv:    ["CON: Recuperar energía", "SAB: Para detectar la presencia de corrupción mágica"],
+      skills: ["Arma de celador", "Flechería arcana"],
+      tools:  [0, 1],
+      equip:  [2, 6, 9, 17],
+      origin: 1,
+      is_race: 0
+    },
+    shaman : {
+      name:   "Chamán",
+      names:  ["Awilix", "Chac", "Itzmaná", "Kantunil", "Jo", "Zulia", "Babajide", "Chimalmat", "Jotok", "Mactzil", "Nicteel", "Yaxcol"],
+      attr:   [2, 4], // CON, SAB
+      hp:     6,
+      en:     3,
+      prof:   "Puedes llevar cualquier arma hecha de madera, armaduras hasta las de pieles y escudos pequeños o medianos hechos de madera.",
+      adv:    ["INT: Identificar criaturas venenosas o peligrosas", "SAB: Reconocer el entorno en zonas salvajes", "Forrajeo: En las Tierras Salvajes"],
+      skills: ["Avatar ancestral", "Lanzamiento de conjuros (chamán)", "Resonancia salvaje"],
+      tools:  [0, 1, 3],
+      equip:  [7, 10, 20],
+      origin: 1,
+      is_race: 0
     }
 };
 
@@ -468,17 +496,18 @@ var equip_packs = [
   [5,   "Paquete del jóbito hondero",  ["Armadura acolchada (d4 / d4)", "Honda (d4 / d10)", "Portabalines", "Balines (d10)"]],     			             // 16
   [30,  "Paquete del rufián",          ["Armadura de cuero (d6 / d6)", "Espada corta (d6)", "Espada corta (d6)", "Arco corto (d6 / d8)", "Carcaj"]], // 17
   [95,  "Paquete del belisario",       ["Cota de mallas (d10 / d8)", "Escudo mediano (+1 / d8)", "Morrión (+1 / d6)", "Hacha de batalla (d8)"]],     // 18
-  [15,  "Paquete del brujo",           ["Armadura de cuero (d6 / d6)", "Daga (d4)", "Guadaña (d10)"]]                                                // 19
+  [15,  "Paquete del brujo",           ["Armadura de cuero (d6 / d6)", "Daga (d4)", "Guadaña (d10)"]],                                               // 19
+  [20,  "Paquete del capellán",        ["Escudo pequeño (+1 / d6)", "Maza (d6)", "Mitra (Sombrero)"]]                                                // 20
 ];
 
 /* -------------------------------------------------------------------------- */
 /* PAQUETES DE HERRAMIENTAS                                                   */
 /* -------------------------------------------------------------------------- */
 var tool_packs = [
-  [5,  "Paquete de mazmorras", ["Mochila", "Odre", "Antorcha (d8)", "Pértiga", "3x Raciones (d6)", "Trozo de tiza", "Ropa de viaje", "Manta", "Yesquero"]],
-  [8,  "Paquete de exploración", ["Mochila", "Odre", "Antorcha (d8)", "Pértiga", "7x Raciones (d6)", "Kit de cocina", "Ropa de viaje", "Tienda de campaña", "Yesquero"]],
-  [20, "Paquete de hechicería", ["Mochila", "Odre", "Antorcha (d8)", "3x Raciones (d6)", "Túnica", "Saco de dormir", "Yesquero", "Libro de conjuros"]],
-  [8,  "Paquete del pío", ["Mochila", "Odre", "Antorcha (d8)", "7x Raciones (d6)", "Túnica", "Saco de dormir", "Yesquero", "Símbolo sagrado"]],
-  [20, "Paquete de ladrón", ["Mochila", "Odre", "Bolsa de abrojos (d6)", "Antorcha (d6)", "3x Raciones (d6)", "Ropas comunes", "Saco de dormir", "Yesquero", "Herramientas de ladrón"]],
-  [20, "Paquete del músico", ["Mochila", "Odre", "Antorcha (d8)", "3x Raciones (d6)", "Ropa elegante", "Saco de dormir", "Yesquero", "Laúd"]]
+  [5,  "Paquete de mazmorras", ["Mochila", "Odre", "Antorcha (d8)", "Pértiga", "3x Raciones (d6)", "Trozo de tiza", "Ropa de viaje", "Manta", "Yesquero"]], // 0
+  [8,  "Paquete de exploración", ["Mochila", "Odre", "Antorcha (d8)", "Pértiga", "7x Raciones (d6)", "Kit de cocina", "Ropa de viaje", "Tienda de campaña", "Yesquero"]], // 1
+  [20, "Paquete de hechicería", ["Mochila", "Odre", "Antorcha (d8)", "3x Raciones (d6)", "Túnica", "Saco de dormir", "Yesquero", "Libro de conjuros"]], // 2
+  [8,  "Paquete del pío", ["Mochila", "Odre", "Antorcha (d8)", "7x Raciones (d6)", "Túnica", "Saco de dormir", "Yesquero", "Símbolo sagrado"]], // 3
+  [20, "Paquete de ladrón", ["Mochila", "Odre", "Bolsa de abrojos (d6)", "Antorcha (d6)", "3x Raciones (d6)", "Ropas comunes", "Saco de dormir", "Yesquero", "Herramientas de ladrón"]], // 4
+  [20, "Paquete del músico", ["Mochila", "Odre", "Antorcha (d8)", "3x Raciones (d6)", "Ropa elegante", "Saco de dormir", "Yesquero", "Laúd"]] // 5
 ];
