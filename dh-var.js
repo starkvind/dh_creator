@@ -525,7 +525,7 @@ var races = {
     req: [[1, 13], [3, 13]], // Destreza e Inteligencia
     old: "no envejecen",
     skills: ["Ala de infamia", "Huesos místicos"],
-    origin: 2
+    origin: 3
   }
 };
 
