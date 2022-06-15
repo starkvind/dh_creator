@@ -8,7 +8,7 @@ var race_config = 0;
 
 var attribs = ["Fuerza", "Destreza", "Constitución", "Inteligencia", "Sabiduría", "Carisma"];
 var aligns =  ["Legal", "Neutral", "Caótico"];
-var origins = ["Dungeon Hack", "Guía del jugador de Ylat", "El Naufragio", "Bestiario de Ylat"];
+var origins = ["Dungeon Hack", "Guía del jugador de Ylat", "Guía del jugador de Ylat 2", "El Naufragio", "Bestiario de Ylat"];
 
 var rooms = {
   tile : [75, "tile"],
@@ -300,6 +300,62 @@ var classes = {
       skills: ["Avatar ancestral", "Lanzamiento de conjuros (chamán)", "Resonancia salvaje"],
       tools:  [0, 1, 3],
       equip:  [7, 10, 20],
+      origin: 1,
+      is_race: 0
+    },
+    sorcerer : {
+      name:   "Hechicero",
+      names:  ["Batseba", "Discordia", "Lorif", "Margott", "Nura", "Talis", "Ethro", "Forlang", "Maverae", "Orión", "Sakon", "Zunari"],
+      attr:   [3, 5], // INT, CAR
+      hp:     4,
+      en:     3,
+      prof:   "Puedes llevar bastones, ballestas ligeras, clavas, dagas, espadas cortas, látigos, hondas y varitas.",
+      adv:    ["INT: Resistir efectos mágicos de naturaleza elemental (debes elegir un elemento concreto)", "CAR: Resistir el encantamiento"],
+      skills: ["Lanzamiento de conjuros (hechicero)", "Canal sortílego"],
+      tools:  [0, 1, 2],
+      equip:  [7, 11],
+      origin: 1,
+      is_race: 0
+    },
+    oracle : {
+      name:   "Oráculo",
+      names:  ["Diana", "Eritea", "Lorain", "Melpos", "Nébula", "Parice", "Teresse", "Az’or", "Crixo", "Fintarion", "Galater", "Mun’ozz", "Perseo"],
+      attr:   [3, 4], // INT, SAB
+      hp:     4,
+      en:     4,
+      prof:   "Puedes llevar bastones, clavas, hondas, mayales, mazas y látigos; te puedes equipar armaduras acolchadas.",
+      adv:    ["CON: Resistir enfermedades", "SAB: Discernir mentiras o ilusiones"],
+      skills: ["Lanzamiento de conjuros (oráculo)", "Plegaria suplicante"],
+      tools:  [0, 1, 3],
+      equip:  [7, 11, 16],
+      origin: 1,
+      is_race: 0
+    },
+    paladin : {
+      name:   "Paladín",
+      names:  ["Adelle", "Berenice", "Cassandra", "Katherin", "Mildred", "Zelda", "Antoine", "Edward", "Fëanâro", "Phillip", "Theodor", "Xenos"],
+      attr:   [0, 2, 5], // FUE, CON, CAR
+      hp:     10,
+      en:     3,
+      prof:   "Puedes usar cualquier tipo de arma, armadura y escudo.",
+      adv:    ["FUE: Apresar o retener oponentes", "DES: Cabalgar o dirigir una montura", "CON: Resistir enfermedades o venenos"],
+      skills: ["Desafío divino", "Imposición de manos", "Lanzamiento de conjuros (paladín)"],
+      tools:  [0, 1, 3],
+      equip:  [0, 1, 3, 4, 5, 8, 11, 18],
+      origin: 1,
+      is_race: 0
+    },
+    vampire : {
+      name:   "Vampiro",
+      names:  ["Astra", "Eudoxia", "Lilith", "Lucita", "Madeleine", "Verona", "Aqueronte", "Caleb", "Klaus", "Ónice", "Vysoben", "Serafín"],
+      attr:   [1, 5], // DES, CAR
+      hp:     8,
+      en:     2,
+      prof:   "Puedes llevar cualquier arma ligera, bastones, espadas largas y roperas, lanzas, látigos, alabardas, espadones, arcos cortos, ballestas ligeras, escudos pequeños y armaduras hasta la coraza.",
+      adv:    ["DES: Moverte sigilosamente o caminar sin ser visto", "CAR: Causar una buena impresión"],
+      skills: ["Poder de la oscuridad", "La sangre es vida", "Sino del oscuro"],
+      tools:  [0, 1, 4],
+      equip:  [8, 9, 11, 14, 17],
       origin: 1,
       is_race: 0
     }
