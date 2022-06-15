@@ -132,7 +132,7 @@ var classes = {
       skills: ["Grito de guerra", "Sed de sangre", "Ira interna"],
       tools:  [0, 1],
       equip:  [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 13],
-      origin: 2,
+      origin: 3,
       is_race: 1
     },
     gnome_class : {
@@ -146,7 +146,7 @@ var classes = {
       skills: ["Visión en la oscuridad", "Lanzamiento de conjuros (gnomo)", "Fuente de maná"],
       tools:  [0, 1, 2, 4],
       equip:  [9, 14, 15, 16, 17],
-      origin: 2,
+      origin: 3,
       is_race: 1
     },
     forsaken_class : {
@@ -160,7 +160,7 @@ var classes = {
       skills: ["Cuerpo blasfemo", "Maldición de los condenados", "Lanzamiento de conjuros (redivivo)"],
       tools:  [0, 1, 2, 3],
       equip:  [10, 13, 17],
-      origin: 2,
+      origin: 3,
       is_race: 1
     },
     kamael_class_1 : {
@@ -174,7 +174,7 @@ var classes = {
       skills: ["Ala de ignominia", "Camino del Viento"],
       tools:  [0, 1],
       equip:  [2, 6, 9, 11, 16, 17],
-      origin: 2,
+      origin: 3,
       is_race: 1
     },
     kamael_class_2 : {
@@ -188,7 +188,7 @@ var classes = {
       skills: ["Ala de ignominia", "Camino de la Tierra"],
       tools:  [0, 1],
       equip:  [3, 8, 9, 10, 12, 14, 17],
-      origin: 2,
+      origin: 3,
       is_race: 1
     },
     kamael_class_3 : {
@@ -202,7 +202,7 @@ var classes = {
       skills: ["Ala de ignominia", "Camino de la Urdimbre"],
       tools:  [0, 1],
       equip:  [9, 11, 16, 17],
-      origin: 2,
+      origin: 3,
       is_race: 1
     },
     barbarian : {
